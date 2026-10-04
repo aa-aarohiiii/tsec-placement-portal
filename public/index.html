@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sign in · TSEC Placement Portal</title>
+  <link rel="icon" href="/img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="auth">
+    <!-- Left: college identity -->
+    <aside class="auth-aside">
+      <img class="auth-logo" src="/img/tsec-logo-white.png" alt="Thadomal Shahani Engineering College">
+      <h1>Training &amp; Placement <em>Portal</em></h1>
+      <p class="lede">Students track every drive, round and offer in one place. The Training &amp; Placement Cell verifies profiles, runs drives and records results.</p>
+      <div class="auth-stats hidden" id="summary">
+        <div><div class="v" data-k="live">—</div><div class="l">Drives open now</div></div>
+        <div><div class="v" data-k="offers">—</div><div class="l">Offers this season</div></div>
+        <div><div class="v" data-k="highest">—</div><div class="l">Highest CTC</div></div>
+      </div>
+      <div class="auth-foot">Thadomal Shahani Engineering College · P.G. Kher Marg, Bandra (W), Mumbai 400050</div>
+    </aside>
+
+    <main class="auth-main">
+      <div class="auth-card">
+        <div id="banner"></div>
+
+        <!-- ============ SIGN IN ============ -->
+        <section id="view-login">
+          <h2>Sign in</h2>
+          <p>Choose your portal and sign in with your registered email.</p>
+          <div class="segmented role-switch" role="tablist">
+            <button type="button" class="active" data-role="STUDENT">Student</button>
+            <button type="button" data-role="TPO">TPO</button>
+          </div>
+          <form id="login-form" class="stack" novalidate>
+            <div class="form-error"></div>
+            <div class="field"><label for="email">Email</label>
+              <input class="input" id="email" name="email" type="email" autocomplete="username" placeholder="name@example.com" required></div>
+            <div class="field">
+              <div class="row between"><label for="password">Password</label><a class="small" href="#forgot" id="forgot-link">Forgot password?</a></div>
+              <div class="pw-wrap"><input class="input" id="password" name="password" type="password" autocomplete="current-password" required>
+                <button type="button" class="pw-toggle" aria-label="Show password"></button></div>
+            </div>
+            <button class="btn primary block" type="submit" style="height:42px">Sign in</button>
+          </form>
+          <p class="small muted" style="margin-top:20px" id="register-link">New student? <a href="#register">Create your account</a></p>
+        </section>
+
+        <!-- ============ REGISTER: step 1 ============ -->
+        <section id="view-register" class="hidden">
+          <div class="auth-step">Step 1 of 2 · Your details</div>
+          <h2>Create student account</h2>
+          <p>We'll email you a 6-digit code to confirm your address.</p>
+          <form id="register-form" class="stack" novalidate>
+            <div class="form-error"></div>
+            <div class="field"><label class="req" for="r-name">Full name</label><input class="input" id="r-name" name="name" autocomplete="name" placeholder="As on your marksheet" required></div>
+            <div class="field"><label class="req" for="r-email">Email</label><input class="input" id="r-email" name="email" type="email" autocomplete="email" placeholder="name@example.com" required>
+              <span class="hint" id="domain-hint">Use an email you can open right now — the code is sent there.</span></div>
+            <div class="form-grid">
+              <div class="field"><label class="req" for="r-roll">Roll number</label><input class="input mono" id="r-roll" name="roll_no" placeholder="e.g. 23CE045" required></div>
+              <div class="field"><label class="req" for="r-year">Year</label>
+                <select class="select" id="r-year" name="year" required><option value="BE">Final year (BE)</option><option value="TE">Third year (TE)</option></select></div>
+            </div>
+            <div class="field"><label class="req" for="r-branch">Branch</label><select class="select" id="r-branch" name="branch" required></select></div>
+            <div class="field"><label class="req" for="r-pw">Password</label>
+              <div class="pw-wrap"><input class="input" id="r-pw" name="password" type="password" autocomplete="new-password" placeholder="At least 8 characters, with a number" required>
+                <button type="button" class="pw-toggle" aria-label="Show password"></button></div></div>
+            <button class="btn primary block" type="submit" style="height:42px">Send verification code</button>
+          </form>
+          <p class="small muted" style="margin-top:20px">Already registered? <a href="#login">Sign in</a></p>
+        </section>
+
+        <!-- ============ FORGOT: step 1 ============ -->
+        <section id="view-forgot" class="hidden">
+          <div class="auth-step">Reset password</div>
+          <h2>Forgot your password?</h2>
+          <p>Enter your registered email and we'll send you a 6-digit code.</p>
+          <form id="forgot-form" class="stack" novalidate>
+            <div class="form-error"></div>
+            <div class="field"><label for="f-email">Email</label><input class="input" id="f-email" name="email" type="email" autocomplete="email" required></div>
+            <button class="btn primary block" type="submit" style="height:42px">Send reset code</button>
+          </form>
+          <p class="small muted" style="margin-top:20px"><a href="#login">← Back to sign in</a></p>
+        </section>
+
+        <!-- ============ OTP (shared by register + forgot) ============ -->
+        <section id="view-otp" class="hidden">
+          <div class="auth-step" id="otp-step">Step 2 of 2 · Verify email</div>
+          <h2 id="otp-title">Check your inbox</h2>
+          <p>We sent a 6-digit code to <b id="otp-email"></b>. It expires in 10 minutes. Check spam if you don't see it.</p>
+          <form id="otp-form" class="stack" novalidate autocomplete="off">
+            <div class="form-error"></div>
+            <div class="field"><label for="otp-code">Verification code</label>
+              <input class="input otp-input" id="otp-code" name="code" inputmode="numeric" autocomplete="one-time-code" maxlength="6" placeholder="••••••" required></div>
+            <div class="field hidden" id="otp-pw-field"><label class="req" for="otp-pw">New password</label>
+              <div class="pw-wrap"><input class="input" id="otp-pw" name="password" type="password" autocomplete="new-password" placeholder="At least 8 characters, with a number">
+                <button type="button" class="pw-toggle" aria-label="Show password"></button></div></div>
+            <button class="btn primary block" type="submit" style="height:42px" id="otp-submit">Verify &amp; create account</button>
+          </form>
+          <div class="row between small" style="margin-top:18px">
+            <a href="#" id="otp-back">← Use a different email</a>
+            <button type="button" class="btn ghost sm" id="otp-resend" disabled>Resend code</button>
+          </div>
+          <div id="otp-dev" class="hidden demo-box"><b style="color:var(--text)">The email could not be sent from this server</b> (email isn't set up, or there's no internet). The code is shown in the server's terminal window — ask the TPO office for it.</div>
+        </section>
+      </div>
+    </main>
+  </div>
+  <script src="/js/common.js"></script>
+  <script src="/js/login.js"></script>
+</body>
+</html>
